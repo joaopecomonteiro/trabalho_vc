@@ -1,3 +1,4 @@
+import torch
 from torch.utils.data import Dataset
 import pandas as pd
 import os
@@ -5,6 +6,8 @@ import numpy as np
 from PIL import Image
 import ast
 import matplotlib.pyplot as plt
+from torchvision.transforms.functional import to_tensor
+
 
 class SpaceDebrisDataset(Dataset):
     """
@@ -19,11 +22,8 @@ class SpaceDebrisDataset(Dataset):
         self.split_dir = os.path.join(self.root_dir,
                                  f"{self.split}")
 
-        #self.images_path = []
-        #breakpoint()
         self.df = pd.read_csv(f"{self.split_dir}.csv")
 
-        #images_path_unsorted = os.listdir(self.split_dir)
 
     def __len__(self):
         return len(self.df)
@@ -32,7 +32,7 @@ class SpaceDebrisDataset(Dataset):
 
         camera_path = f"{self.split_dir}/{idx}.jpg"
 
-        image = Image.open(camera_path)
+        image = to_tensor(Image.open(camera_path))
 
         bboxes_df = self.df[self.df["ImageID"] == idx]
 
@@ -40,9 +40,7 @@ class SpaceDebrisDataset(Dataset):
 
         bboxes_text = np.array(bboxes_temp)[0]
 
-        bboxes = np.array(ast.literal_eval(bboxes_text))
-
-        #breakpoint()
+        bboxes = torch.tensor(ast.literal_eval(bboxes_text))
 
         return image, bboxes
 
@@ -53,8 +51,8 @@ class SpaceDebrisDataset(Dataset):
 
 
 if __name__ == "__main__":
-
     dataset = SpaceDebrisDataset(split="train")
+
 
     idx = np.random.randint(len(dataset))
 
