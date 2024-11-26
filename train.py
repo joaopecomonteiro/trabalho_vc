@@ -56,7 +56,7 @@ def train(dataloader, model, criterion, optimiser, config, epoch):
         #    print(logits[i].shape)
         #print(loss)
 
-        #breakpoint()
+        breakpoint()
 
         optimiser.zero_grad()
         loss.backward()
