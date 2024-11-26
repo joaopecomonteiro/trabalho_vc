@@ -95,6 +95,9 @@ class FPN(nn.Module):
         p4 = self.toplayer1(p4)
         p3 = self._upsample_add(p4, self.latlayer3(c3))
         p3 = self.toplayer2(p3)
+
+
+
         return p3, p4, p5, p6, p7
 
 

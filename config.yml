@@ -1,6 +1,6 @@
 root_dir: debris_detection
 
-batch_size: 2
+batch_size: 1
 
 num_workers: 0
 
@@ -8,3 +8,6 @@ logdir: logs
 
 num_epochs: 50
 
+learning_rate: 0.001
+
+weight_decay: 0.0001
