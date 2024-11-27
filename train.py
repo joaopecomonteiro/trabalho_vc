@@ -49,7 +49,7 @@ def train(dataloader, model, criterion, optimiser, config, epoch):
 
         images, bboxes = batch
 
-        logits = model(images)
+        n_debris, pred_bboxes = model(images)
 
         loss = criterion(logits, bboxes)
         #for i in range(len(logits)):
